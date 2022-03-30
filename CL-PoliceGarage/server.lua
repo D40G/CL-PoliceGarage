@@ -21,7 +21,7 @@ AddEventHandler('CL-PoliceGarage:AddVehicleSQL', function(mods, vehicle, hash, p
     local src = source;
     local playerD = QBCore.Functions.GetPlayer(src);
     if (playerD ~= nil and playerD) then
-        exports.oxmysql:execute('INSERT INTO player_vehicles (license, citizenid, vehicle, hash, mods, plate, state) VALUES (?, ?, ?, ?, ?, ?, ?)', {
+        MySQL.Async.insert('INSERT INTO player_vehicles (license, citizenid, vehicle, hash, mods, plate, state) VALUES (?, ?, ?, ?, ?, ?, ?)', {
             playerD.PlayerData.license,
             playerD.PlayerData.citizenid,
             vehicle,
@@ -36,11 +36,12 @@ end)
 RegisterServerEvent('CL-PoliceGarage:TakeMoney', function(data)
 	local src = source
 	local Player = QBCore.Functions.GetPlayer(src)
+    local steamname = GetPlayerName(src)
     if Player.PlayerData.money.cash >= data.price then
         TriggerClientEvent("CL-PoliceGarage:SpawnVehicle", src, data.vehicle)  
         Player.Functions.RemoveMoney("cash", data.price)
 	    TriggerClientEvent('QBCore:Notify', src, 'Vehicle Successfully Bought', "success")    
-        DiscordLog(discord['webhook'], 'New Vehicle Bought By: **'..steamname..'** ID: **' ..source.. '** Bought: **' ..data.vehicle.. '** For: **' ..data.price.. '**', 14177041) 
+        DiscordLog(discord['webhook'], 'New Vehicle Bought By: **'..steamname..'** ID: **' ..source.. '** Bought: **' ..data.vehicle.. '** For: **' ..data.price.. '**$', 14177041) 
     else
         TriggerClientEvent('QBCore:Notify', src, 'You Dont Have Enough Money !', "error")              
     end    
