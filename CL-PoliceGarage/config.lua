@@ -5,6 +5,7 @@ Config.UseColors = false
 Config.Job = 'police'
 
 --You Can Add As Many As You Like
+--DO NOT add vehicles that are not in your shared ! otherwise the qb-garages wont work
 Config.Vehicles = {
     [1] = {
         ['vehiclename'] = "Bati", --Name
