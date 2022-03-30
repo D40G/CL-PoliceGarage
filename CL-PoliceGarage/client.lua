@@ -105,19 +105,21 @@ CreateThread(function()
         local plyPed = PlayerPedId()
         local plyCoords = GetEntityCoords(plyPed)
         local letSleep = true
- 
-        if PlayerJob ~= nil and PlayerJob.name == Config.Job then
-            if (GetDistanceBetweenCoords(plyCoords.x, plyCoords.y, plyCoords.z, 441.78894, -1020.011, 28.225797, true) < 10) then
-                letSleep = false
-                DrawMarker(2, 441.78894, -1020.011, 28.225797, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.3, 0.2, 0.15, 0, 0, 0, 222, false, false, false, true, false, false, false)
-                if (GetDistanceBetweenCoords(plyCoords.x, plyCoords.y, plyCoords.z, 441.78894, -1020.011, 28.225797, true) < 1.5) then
-                    DrawText3D(441.78894, -1020.011, 28.225797, "~g~E~w~ - Police Garage") 
-                    if IsControlJustReleased(0, 38) then
-                        TriggerEvent("CL-PoliceGarage:Menu")
+
+        QBCore.Functions.GetPlayerData(function(PlayerData)
+            if PlayerData.job.name == Config.Job then
+                if (GetDistanceBetweenCoords(plyCoords.x, plyCoords.y, plyCoords.z, 441.78894, -1020.011, 28.225797, true) < 10) then
+                    letSleep = false
+                    DrawMarker(2, 441.78894, -1020.011, 28.225797, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.3, 0.2, 0.15, 0, 0, 0, 222, false, false, false, true, false, false, false)
+                    if (GetDistanceBetweenCoords(plyCoords.x, plyCoords.y, plyCoords.z, 441.78894, -1020.011, 28.225797, true) < 1.5) then
+                        DrawText3D(441.78894, -1020.011, 28.225797, "~g~E~w~ - Police Garage") 
+                        if IsControlJustReleased(0, 38) then
+                            TriggerEvent("CL-PoliceGarage:Menu")
+                        end
                     end
                 end
             end
-        end
+        end)
 
         if letSleep then
             Wait(2000)
