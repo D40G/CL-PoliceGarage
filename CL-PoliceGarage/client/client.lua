@@ -30,12 +30,6 @@ RegisterNetEvent('CL-PoliceGarage:Menu', function()
         }
     }
     Menu[#Menu+1] = {
-        header = "Store Vehicle",
-        params = {
-            event = "CL-PoliceGarage:StoreVehicle",
-        }
-    }
-    Menu[#Menu+1] = {
         header = "⬅ Close Menu",
         params = {
             event = "qb-menu:client:closeMenu"
@@ -113,11 +107,17 @@ CreateThread(function()
                 if (GetDistanceBetweenCoords(plyCoords.x, plyCoords.y, plyCoords.z, 441.78894, -1020.011, 28.225797, true) < 10) then
                     letSleep = false
                     DrawMarker(2, 441.78894, -1020.011, 28.225797, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.3, 0.2, 0.15, 0, 0, 0, 222, false, false, false, true, false, false, false)
-                    if (GetDistanceBetweenCoords(plyCoords.x, plyCoords.y, plyCoords.z, 441.78894, -1020.011, 28.225797, true) < 1.5) then
+                    if (GetDistanceBetweenCoords(plyCoords.x, plyCoords.y, plyCoords.z, 441.78894, -1020.011, 28.225797, true) < 1.5) and not IsPedInAnyVehicle(PlayerPedId(), false) then
                         DrawText3D(441.78894, -1020.011, 28.225797, "~g~E~w~ - Police Garage") 
                         if IsControlJustReleased(0, 38) then
                             TriggerEvent("CL-PoliceGarage:Menu")
                         end
+                    end
+                    if IsPedInAnyVehicle(PlayerPedId(), false) then   
+                        DrawText3D(441.78894, -1020.011, 28.225797, "~g~E~w~ - Store Vehicle (Will Get Impounded)") 
+                    end
+                    if IsControlJustReleased(0, 38) and IsPedInAnyVehicle(PlayerPedId(), false) then
+                        TriggerEvent("CL-PoliceGarage:StoreVehicle")
                     end
                 end
             end
