@@ -2,6 +2,8 @@ Config = Config or {}
 
 Config.UseColors = false
 
+Config.MS = 'high' -- MS for the script recommended using high if not the "close" will get a bit baggy. options high / low
+
 Config.Job = 'police'
 
 --You Can Add As Many As You Like

@@ -6,12 +6,12 @@ author "NevoSwissa#0111"
 description "A Simple Police Garage Made By NevoSwissa#0111 For CloudDevelopment"
 
 client_scripts {
-    'client.lua',
+    'client/client.lua',
     'config.lua',
 }
 
 server_scripts {
     '@oxmysql/lib/MySQL.lua',
-    'server.lua',
+    'server/server.lua',
     'config.lua',
 }
