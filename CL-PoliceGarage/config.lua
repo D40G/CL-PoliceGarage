@@ -23,12 +23,4 @@ Config.Vehicles = {
         ['g'] = 0,
         ['b'] = 0,
     }, 
-    [2] = {
-        ['vehiclename'] = "Test4", --Name
-        ['vehicle'] = "sultanrs", --Model
-        ['price'] = 20000, --Price
-        ['r'] = 0, --Vehicle Color (optional)
-        ['g'] = 0,
-        ['b'] = 0,
-    },
 }
