@@ -1,9 +1,9 @@
 local QBCore = exports['qb-core']:GetCoreObject()
 
 discord = {
-    ['webhook'] = "https://discord.com/api/webhooks/931199353874436126/lTRwYdh4pQpj9HnBfk0dlfeEFGq-Sq7-PcDKImDZEE5xrg75zI5AI7pQJ4QGytsTOgmi",
+    ['webhook'] = "YOUR WEBHOOK",
     ['name'] = 'CL-PoliceGarage',
-    ['image'] = "https://cdn.discordapp.com/attachments/926465631770005514/958798583992287272/POLICE-GARAGE.png"
+    ['image'] = "YOUR IMAGE"
 }
 
 function GeneratePlate()
@@ -41,7 +41,7 @@ RegisterServerEvent('CL-PoliceGarage:TakeMoney', function(data)
         TriggerClientEvent("CL-PoliceGarage:SpawnVehicle", src, data.vehicle)  
         Player.Functions.RemoveMoney("cash", data.price)
 	    TriggerClientEvent('QBCore:Notify', src, 'Vehicle Successfully Bought', "success")    
-        DiscordLog(discord['webhook'], 'New Vehicle Bought By: **'..steamname..'** ID: **' ..source.. '** Bought: **' ..data.vehicle.. '** For: **' ..data.price.. '**$', 14177041) 
+        DiscordLog(discord['webhook'], 'New Vehicle Bought By: **'..steamname..'** ID: **' ..source.. '** Bought: **' ..data.vehicle.. '** For: **' ..data.price.. '$**', 14177041) 
     else
         TriggerClientEvent('QBCore:Notify', src, 'You Dont Have Enough Money !', "error")              
     end    
@@ -56,10 +56,10 @@ function DiscordLog(name, message, color)
             ["url"] = "https://discord.gg/e4AYS3VE",
             ["footer"] = {
             ["text"] = "By CloudDevelopment",
-            ["icon_url"] = "https://cdn.discordapp.com/attachments/926465631770005514/958798583992287272/POLICE-GARAGE.png"
+            ["icon_url"] = "YOUR IMAGE"
         },
             ["thumbnail"] = {
-                ["url"] = "https://cdn.discordapp.com/attachments/926465631770005514/958798583992287272/POLICE-GARAGE.png",
+                ["url"] = "YOUR IMAGE",
             },
     }
 }
