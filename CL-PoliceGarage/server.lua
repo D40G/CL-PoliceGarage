@@ -10,22 +10,6 @@ function GeneratePlate()
     end
 end
 
-RegisterServerEvent("Dox-Garage:server:saveVehicle", function(mods, vehicle)
-    local src = source;
-    local playerD = QBCore.Functions.GetPlayer(src);
-    if(playerD ~= nil and playerD) then
-        exports.oxmysql:execute('INSERT INTO player_vehicles (license, citizenid, vehicle, hash, mods, plate, state) VALUES (?, ?, ?, ?, ?, ?, ?)', {
-            playerD.PlayerData.license,
-            playerD.PlayerData.citizenid,
-            vehicle,
-            GetHashKey(vehicle),
-            json.encode(mods),
-            plate,
-            0
-        })
-    end
-end)
-
 RegisterServerEvent("CL-PoliceGarage:AddVehicleSQL")
 AddEventHandler('CL-PoliceGarage:AddVehicleSQL', function(mods, vehicle, hash, plate)
     local src = source;
