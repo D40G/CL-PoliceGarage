@@ -115,7 +115,7 @@ CreateThread(function()
             if PlayerData.job.name == Config.Job then
                 if (GetDistanceBetweenCoords(plyCoords.x, plyCoords.y, plyCoords.z, 441.78894, -1020.011, 28.225797, true) < 10) then
                     letSleep = false
-                    DrawMarker(2, 441.78894, -1020.011, 28.225797, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.3, 0.2, 0.15, 0, 0, 0, 222, false, false, false, true, false, false, false)
+                    DrawMarker(36, 441.78894, -1020.011, 28.225797 + 0.2, 0.0, 0.0, 0.0, 0.0, 0.0, 0.7, 0.7, 0.5, 0.5, 0, 0, 0, 255, true, false, false, true, false, false, false)
                     if Config.UseMarkerInsteadOfMenu then
                         if (GetDistanceBetweenCoords(plyCoords.x, plyCoords.y, plyCoords.z, 441.78894, -1020.011, 28.225797, true) < 1.5) and not IsPedInAnyVehicle(PlayerPedId(), false) then
                             DrawText3D(441.78894, -1020.011, 28.225797, "~g~E~w~ - Police Garage") 
