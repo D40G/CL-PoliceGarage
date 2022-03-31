@@ -187,6 +187,8 @@ AddEventHandler("CL-PoliceGarage:PreviewVehicle", function(data)
     InPreview = true
     local coords = vector4(439.22729, -1021.972, 28.610841, 99.184043)
     QBCore.Functions.SpawnVehicle(data.vehicle, function(veh)
+        SetEntityVisible(PlayerPedId(), false, 1)
+        FreezeEntityPosition(PlayerPedId(), true)
         SetVehicleNumberPlateText(veh, "POL"..tostring(math.random(1000, 9999)))
         exports['LegacyFuel']:SetFuel(veh, 0.0)
         CloseMenu()
@@ -215,10 +217,11 @@ AddEventHandler("CL-PoliceGarage:PreviewVehicle", function(data)
             ShowHelpNotification("Press ~INPUT_FRONTEND_RRIGHT~ To Close")
         end
 
-
         Citizen.CreateThread(function()
             while true do
                 if IsControlJustReleased(0, 177) then
+                    SetEntityVisible(PlayerPedId(), true, 1)
+                    FreezeEntityPosition(PlayerPedId(), false)
                     PlaySoundFrontend(-1, "NO", "HUD_FRONTEND_DEFAULT_SOUNDSET", 1)
                     QBCore.Functions.DeleteVehicle(veh)
                     DoScreenFadeOut(200)

@@ -29,4 +29,20 @@ Config.Vehicles = {
         ['g'] = 0,
         ['b'] = 0,
     }, 
+    [3] = {
+        ['vehiclename'] = "Police2", --Name
+        ['vehicle'] = "sultan", --Model
+        ['price'] = 10000, --Price
+        ['r'] = 0, --Vehicle Color (Optional)
+        ['g'] = 0,
+        ['b'] = 0,
+    }, 
+    [4] = {
+        ['vehiclename'] = "SultanRS", --Name
+        ['vehicle'] = "sultanrs", --Model
+        ['price'] = 52000, --Price
+        ['r'] = 0, --Vehicle Color (Optional)
+        ['g'] = 0,
+        ['b'] = 0,
+    }, 
 }
