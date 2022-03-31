@@ -111,35 +111,33 @@ CreateThread(function()
         local plyCoords = GetEntityCoords(plyPed)
         local letSleep = true
 
-        QBCore.Functions.GetPlayerData(function(PlayerData)
-            if PlayerData.job.name == Config.Job then
-                if (GetDistanceBetweenCoords(plyCoords.x, plyCoords.y, plyCoords.z, 441.78894, -1020.011, 28.225797, true) < 10) then
-                    letSleep = false
-                    DrawMarker(36, 441.78894, -1020.011, 28.225797 + 0.2, 0.0, 0.0, 0.0, 0.0, 0.0, 0.7, 0.7, 0.5, 0.5, 0, 0, 0, 255, true, false, false, true, false, false, false)
-                    if Config.UseMarkerInsteadOfMenu then
-                        if (GetDistanceBetweenCoords(plyCoords.x, plyCoords.y, plyCoords.z, 441.78894, -1020.011, 28.225797, true) < 1.5) and not IsPedInAnyVehicle(PlayerPedId(), false) then
-                            DrawText3D(441.78894, -1020.011, 28.225797, "~g~E~w~ - Police Garage") 
-                            if IsControlJustReleased(0, 38) then
-                                TriggerEvent("CL-PoliceGarage:Menu")
-                            end
+        if PlayerJob ~= nil and PlayerJob.name == Config.Job then
+            if (GetDistanceBetweenCoords(plyCoords.x, plyCoords.y, plyCoords.z, 441.78894, -1020.011, 28.225797, true) < 10) then
+                letSleep = false
+                DrawMarker(36, 441.78894, -1020.011, 28.225797 + 0.2, 0.0, 0.0, 0.0, 0.0, 0.0, 0.7, 0.7, 0.5, 0.5, 0, 0, 0, 255, true, false, false, true, false, false, false)
+                if Config.UseMarkerInsteadOfMenu then
+                    if (GetDistanceBetweenCoords(plyCoords.x, plyCoords.y, plyCoords.z, 441.78894, -1020.011, 28.225797, true) < 1.5) and not IsPedInAnyVehicle(PlayerPedId(), false) then
+                        DrawText3D(441.78894, -1020.011, 28.225797, "~g~E~w~ - Police Garage") 
+                        if IsControlJustReleased(0, 38) then
+                            TriggerEvent("CL-PoliceGarage:Menu")
                         end
-                        if IsPedInAnyVehicle(PlayerPedId(), false) then   
-                            DrawText3D(441.78894, -1020.011, 28.225797, "~g~E~w~ - Store Vehicle (Will Get Impounded)") 
-                        end
-                        if IsControlJustReleased(0, 38) and IsPedInAnyVehicle(PlayerPedId(), false) then
-                            TriggerEvent("CL-PoliceGarage:StoreVehicle")
-                        end
-                    else
-                        if (GetDistanceBetweenCoords(plyCoords.x, plyCoords.y, plyCoords.z, 441.78894, -1020.011, 28.225797, true) < 1.5) then
-                            DrawText3D(441.78894, -1020.011, 28.225797, "~g~E~w~ - Police Garage") 
-                            if IsControlJustReleased(0, 38) then
-                                TriggerEvent("CL-PoliceGarage:Menu")
-                            end
+                    end
+                    if IsPedInAnyVehicle(PlayerPedId(), false) then   
+                        DrawText3D(441.78894, -1020.011, 28.225797, "~g~E~w~ - Store Vehicle (Will Get Impounded)") 
+                    end
+                    if IsControlJustReleased(0, 38) and IsPedInAnyVehicle(PlayerPedId(), false) then
+                        TriggerEvent("CL-PoliceGarage:StoreVehicle")
+                    end
+                else
+                    if (GetDistanceBetweenCoords(plyCoords.x, plyCoords.y, plyCoords.z, 441.78894, -1020.011, 28.225797, true) < 1.5) then
+                        DrawText3D(441.78894, -1020.011, 28.225797, "~g~E~w~ - Police Garage") 
+                        if IsControlJustReleased(0, 38) then
+                            TriggerEvent("CL-PoliceGarage:Menu")
                         end
                     end
                 end
             end
-        end)
+        end
 
         if letSleep then
             Wait(2000)
@@ -201,6 +199,7 @@ AddEventHandler("CL-PoliceGarage:PreviewVehicle", function(data)
         VehicleCam = CreateCamWithParams("DEFAULT_SCRIPTED_CAMERA", 434.03289, -1022.814, 28.730619, 50, 0.00, 282.17034, 80.00, false, 0)
         SetCamActive(VehicleCam, true)
         RenderScriptCams(true, true, 500, true, true)
+        
         if Config.MS == 'high' then
             Citizen.CreateThread(function()
                 while true do
