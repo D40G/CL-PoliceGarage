@@ -6,24 +6,14 @@ discord = {
     ['image'] = "YOUR IMAGE"
 }
 
-function GeneratePlate()
-    local plate = QBCore.Shared.RandomInt(1) .. QBCore.Shared.RandomStr(2) .. QBCore.Shared.RandomInt(3) .. QBCore.Shared.RandomStr(2)
-    local result = MySQL.Sync.fetchScalar('SELECT plate FROM player_vehicles WHERE plate = ?', {plate})
-    if result then
-        return GeneratePlate()
-    else
-        return plate:upper()
-    end
-end
-
 RegisterServerEvent("CL-PoliceGarage:AddVehicleSQL")
 AddEventHandler('CL-PoliceGarage:AddVehicleSQL', function(mods, vehicle, hash, plate)
-    local src = source;
-    local playerD = QBCore.Functions.GetPlayer(src);
-    if (playerD ~= nil and playerD) then
+    local src = source
+    local Player = QBCore.Functions.GetPlayer(src)
+    if (Player ~= nil and Player) then
         MySQL.Async.insert('INSERT INTO player_vehicles (license, citizenid, vehicle, hash, mods, plate, state) VALUES (?, ?, ?, ?, ?, ?, ?)', {
-            playerD.PlayerData.license,
-            playerD.PlayerData.citizenid,
+            Player.PlayerData.license,
+            Player.PlayerData.citizenid,
             vehicle,
             hash,
             json.encode(mods),
