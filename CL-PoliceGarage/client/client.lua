@@ -218,7 +218,6 @@ AddEventHandler("CL-PoliceGarage:PreviewVehicle", function(data)
 
         Citizen.CreateThread(function()
             while true do
-                Citizen.Wait(7)
                 if IsControlJustReleased(0, 177) then
                     PlaySoundFrontend(-1, "NO", "HUD_FRONTEND_DEFAULT_SOUNDSET", 1)
                     QBCore.Functions.DeleteVehicle(veh)

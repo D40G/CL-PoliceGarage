@@ -10,17 +10,15 @@ RegisterServerEvent("CL-PoliceGarage:AddVehicleSQL")
 AddEventHandler('CL-PoliceGarage:AddVehicleSQL', function(mods, vehicle, hash, plate)
     local src = source
     local Player = QBCore.Functions.GetPlayer(src)
-    if (Player ~= nil and Player) then
-        MySQL.Async.insert('INSERT INTO player_vehicles (license, citizenid, vehicle, hash, mods, plate, state) VALUES (?, ?, ?, ?, ?, ?, ?)', {
-            Player.PlayerData.license,
-            Player.PlayerData.citizenid,
-            vehicle,
-            hash,
-            json.encode(mods),
-            plate,
-            0
-        })
-    end
+    MySQL.Async.insert('INSERT INTO player_vehicles (license, citizenid, vehicle, hash, mods, plate, state) VALUES (?, ?, ?, ?, ?, ?, ?)', {
+        Player.PlayerData.license,
+        Player.PlayerData.citizenid,
+        vehicle,
+        hash,
+        json.encode(mods),
+        plate,
+        0
+    })
 end)
 
 RegisterServerEvent('CL-PoliceGarage:TakeMoney', function(data)
