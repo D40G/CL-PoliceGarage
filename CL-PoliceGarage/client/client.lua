@@ -31,7 +31,7 @@ RegisterNetEvent('CL-PoliceGarage:Menu', function()
     }
     if not Config.UseMarkerInsteadOfMenu then
         Menu[#Menu+1] = {
-            header = "⬅ Return Menu",
+            header = "⬅ Store Vehicle",
             params = {
                 event = "CL-PoliceGarage:StoreVehicle"
             }
