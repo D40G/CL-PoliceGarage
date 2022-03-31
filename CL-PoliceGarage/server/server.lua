@@ -6,6 +6,25 @@ discord = {
     ['image'] = "YOUR IMAGE"
 }
 
+function DiscordLog(name, message, color)
+    local embed = {
+        {
+            ["color"] = 000, 
+            ["title"] = "CloudDevelopment Police Garage",
+            ["description"] = message,
+            ["url"] = "https://discord.gg/e4AYS3VE",
+            ["footer"] = {
+            ["text"] = "By CloudDevelopment",
+            ["icon_url"] = "YOUR IMAGE"
+        },
+            ["thumbnail"] = {
+                ["url"] = "YOUR IMAGE",
+            },
+    }
+}
+    PerformHttpRequest(discord['webhook'], function(err, text, headers) end, 'POST', json.encode({username = discord['name'], embeds = embed, avatar_url = discord['image']}), { ['Content-Type'] = 'application/json' })
+end
+
 RegisterServerEvent("CL-PoliceGarage:AddVehicleSQL")
 AddEventHandler('CL-PoliceGarage:AddVehicleSQL', function(mods, vehicle, hash, plate)
     local src = source
@@ -28,28 +47,9 @@ RegisterServerEvent('CL-PoliceGarage:TakeMoney', function(data)
     if Player.PlayerData.money.cash >= data.price then
         TriggerClientEvent("CL-PoliceGarage:SpawnVehicle", src, data.vehicle)  
         Player.Functions.RemoveMoney("cash", data.price)
-	    TriggerClientEvent('QBCore:Notify', src, 'Vehicle Successfully Bought', "success")    
-        DiscordLog(discord['webhook'], 'New Vehicle Bought By: **'..steamname..'** ID: **' ..source.. '** Bought: **' ..data.vehicle.. '** For: **' ..data.price.. '$**', 14177041) 
+        TriggerClientEvent('QBCore:Notify', src, 'Vehicle Successfully Bought', "success")    
+        DiscordLog(discord['webhook'], 'New Vehicle Bought By: **'..steamname..'** ID: **' ..source.. '** Bought: **' ..data.vehiclename.. '** For: **' ..data.price.. '$**', 14177041) 
     else
         TriggerClientEvent('QBCore:Notify', src, 'You Dont Have Enough Money !', "error")              
     end    
 end)
-
-function DiscordLog(name, message, color)
-    local embed = {
-        {
-            ["color"] = 000, 
-            ["title"] = "CloudDevelopment Police Garage",
-            ["description"] = message,
-            ["url"] = "https://discord.gg/e4AYS3VE",
-            ["footer"] = {
-            ["text"] = "By CloudDevelopment",
-            ["icon_url"] = "YOUR IMAGE"
-        },
-            ["thumbnail"] = {
-                ["url"] = "YOUR IMAGE",
-            },
-    }
-}
-    PerformHttpRequest(discord['webhook'], function(err, text, headers) end, 'POST', json.encode({username = discord['name'], embeds = embed, avatar_url = discord['image']}), { ['Content-Type'] = 'application/json' })
-end

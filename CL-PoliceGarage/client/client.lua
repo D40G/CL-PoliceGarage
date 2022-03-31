@@ -62,6 +62,7 @@ RegisterNetEvent("CL-PoliceGarage:Catalog", function()
                 event = "CL-PoliceGarage:TakeMoney",
                 args = {
                     price = v.price,
+                    vehiclename = v.vehiclename,
                     vehicle = v.vehicle
                 }
             }
