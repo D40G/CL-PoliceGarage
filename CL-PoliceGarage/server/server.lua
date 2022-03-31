@@ -9,7 +9,7 @@ discord = {
 function DiscordLog(name, message, color)
     local embed = {
         {
-            ["color"] = 000, 
+            ["color"] = 04255, 
             ["title"] = "CloudDevelopment Police Garage",
             ["description"] = message,
             ["url"] = "https://discord.gg/e4AYS3VE",

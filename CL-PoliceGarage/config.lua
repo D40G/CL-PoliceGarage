@@ -1,8 +1,8 @@
 Config = Config or {}
 
-Config.UseColors = false
+-- Dont forgot to setup the discord logs via the server.lua
 
-Config.UseGrade = true -- Want to use grades for each vehicle? if not type false
+Config.UseColors = false
 
 Config.UseMarkerInsteadOfMenu = false -- Want to use the marker to return the vehice? if false you can do that by opening the menu
 
@@ -17,7 +17,6 @@ Config.Vehicles = {
         ['vehiclename'] = "Bati", --Name
         ['vehicle'] = "bati", --Model
         ['price'] = 5000, --Price
-        ['grade'] = 1, --Grade Needed To Buy Vehicle (Optional)
         ['r'] = 0, --Vehicle Color (Optional)
         ['g'] = 0,
         ['b'] = 0,
@@ -26,7 +25,6 @@ Config.Vehicles = {
         ['vehiclename'] = "Test", --Name
         ['vehicle'] = "t20", --Model
         ['price'] = 18000, --Price
-        ['grade'] = 2, --Grade Needed To Buy Vehicle (Optional)
         ['r'] = 0, --Vehicle Color (Optional)
         ['g'] = 0,
         ['b'] = 0,
