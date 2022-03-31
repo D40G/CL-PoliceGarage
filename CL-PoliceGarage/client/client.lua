@@ -2,6 +2,8 @@ local QBCore = exports['qb-core']:GetCoreObject()
 
 local InPreview = false
 
+local isActive = false
+
 PlayerJob = {}
 
 RegisterNetEvent('QBCore:Client:OnPlayerLoaded')
@@ -167,6 +169,10 @@ CreateThread(function()
     end
 end)
 
+RegisterNetEvent('CL-PoliceGarage:client:SetActive', function(status)
+    isActive = status
+end)
+
 RegisterNetEvent('CL-PoliceGarage:StoreVehicle')
 AddEventHandler('CL-PoliceGarage:StoreVehicle', function()
     local ped = PlayerPedId()
@@ -204,67 +210,136 @@ end)
 
 RegisterNetEvent("CL-PoliceGarage:PreviewVehicle")
 AddEventHandler("CL-PoliceGarage:PreviewVehicle", function(data)
-    InPreview = true
-    local coords = vector4(439.22729, -1021.972, 28.610841, 99.184043)
-    QBCore.Functions.SpawnVehicle(data.vehicle, function(veh)
-        SetEntityVisible(PlayerPedId(), false, 1)
-        if Config.SetVehicleTransparency == 'low' then
-            SetEntityAlpha(veh, 400)
-        elseif Config.SetVehicleTransparency == 'medium' then
-            SetEntityAlpha(veh, 93)
-        elseif Config.SetVehicleTransparency == 'high' then
-            SetEntityAlpha(veh, 40)
-        elseif Config.SetVehicleTransparency == 'none' then
+    if Config.UsePreviewMenuSync then
+        QBCore.Functions.TriggerCallback('CL-PoliceGarage:CheckIfActive', function(result)
+            if result then
+                InPreview = true
+                local coords = vector4(439.22729, -1021.972, 28.610841, 99.184043)
+                QBCore.Functions.SpawnVehicle(data.vehicle, function(veh)
+                    SetEntityVisible(PlayerPedId(), false, 1)
+                    if Config.SetVehicleTransparency == 'low' then
+                        SetEntityAlpha(veh, 400)
+                    elseif Config.SetVehicleTransparency == 'medium' then
+                        SetEntityAlpha(veh, 93)
+                    elseif Config.SetVehicleTransparency == 'high' then
+                        SetEntityAlpha(veh, 40)
+                    elseif Config.SetVehicleTransparency == 'none' then
+                        
+                    end
+                    FreezeEntityPosition(PlayerPedId(), true)
+                    SetVehicleNumberPlateText(veh, "POL"..tostring(math.random(1000, 9999)))
+                    exports['LegacyFuel']:SetFuel(veh, 0.0)
+                    CloseMenu()
+                    FreezeEntityPosition(veh, true)
+                    SetVehicleEngineOn(veh, false, false)
+                    DoScreenFadeOut(200)
+                    Citizen.Wait(500)
+                    DoScreenFadeIn(200)
+                    SetVehicleUndriveable(veh, true)
+                
+                    VehicleCam = CreateCamWithParams("DEFAULT_SCRIPTED_CAMERA", 434.03289, -1022.814, 28.730619, 50, 0.00, 282.17034, 80.00, false, 0)
+                    SetCamActive(VehicleCam, true)
+                    RenderScriptCams(true, true, 500, true, true)
+                    
+                    if Config.MS == 'high' then
+                        Citizen.CreateThread(function()
+                            while true do
+                                if InPreview then
+                                    ShowHelpNotification("Press ~INPUT_FRONTEND_RRIGHT~ To Close")
+                                elseif not InPreview then
+                                    break
+                                end
+                                Citizen.Wait(1)
+                            end
+                        end)
+                    elseif Config.MS == 'low' then
+                        ShowHelpNotification("Press ~INPUT_FRONTEND_RRIGHT~ To Close")
+                    end
             
-        end
-        FreezeEntityPosition(PlayerPedId(), true)
-        SetVehicleNumberPlateText(veh, "POL"..tostring(math.random(1000, 9999)))
-        exports['LegacyFuel']:SetFuel(veh, 0.0)
-        CloseMenu()
-        FreezeEntityPosition(veh, true)
-        SetVehicleEngineOn(veh, false, false)
-        DoScreenFadeOut(200)
-        Citizen.Wait(500)
-        DoScreenFadeIn(200)
-        SetVehicleUndriveable(veh, true)
-    
-        VehicleCam = CreateCamWithParams("DEFAULT_SCRIPTED_CAMERA", 434.03289, -1022.814, 28.730619, 50, 0.00, 282.17034, 80.00, false, 0)
-        SetCamActive(VehicleCam, true)
-        RenderScriptCams(true, true, 500, true, true)
+                    Citizen.CreateThread(function()
+                        while true do
+                            if IsControlJustReleased(0, 177) then
+                                SetEntityVisible(PlayerPedId(), true, 1)
+                                FreezeEntityPosition(PlayerPedId(), false)
+                                PlaySoundFrontend(-1, "NO", "HUD_FRONTEND_DEFAULT_SOUNDSET", 1)
+                                QBCore.Functions.DeleteVehicle(veh)
+                                DoScreenFadeOut(200)
+                                Citizen.Wait(500)
+                                DoScreenFadeIn(200)
+                                RenderScriptCams(false, false, 1, true, true)
+                                InPreview = false
+                                TriggerServerEvent("CL-PoliceGarage:server:SetActive", false)
+                                break
+                            end
+                            Citizen.Wait(1)
+                        end
+                    end)
+                end, coords, true)
+            end
+        end)
+    else
+        InPreview = true
+        local coords = vector4(439.22729, -1021.972, 28.610841, 99.184043)
+        QBCore.Functions.SpawnVehicle(data.vehicle, function(veh)
+            SetEntityVisible(PlayerPedId(), false, 1)
+            if Config.SetVehicleTransparency == 'low' then
+                SetEntityAlpha(veh, 400)
+            elseif Config.SetVehicleTransparency == 'medium' then
+                SetEntityAlpha(veh, 93)
+            elseif Config.SetVehicleTransparency == 'high' then
+                SetEntityAlpha(veh, 40)
+            elseif Config.SetVehicleTransparency == 'none' then
+                
+            end
+            FreezeEntityPosition(PlayerPedId(), true)
+            SetVehicleNumberPlateText(veh, "POL"..tostring(math.random(1000, 9999)))
+            exports['LegacyFuel']:SetFuel(veh, 0.0)
+            CloseMenu()
+            FreezeEntityPosition(veh, true)
+            SetVehicleEngineOn(veh, false, false)
+            DoScreenFadeOut(200)
+            Citizen.Wait(500)
+            DoScreenFadeIn(200)
+            SetVehicleUndriveable(veh, true)
         
-        if Config.MS == 'high' then
+            VehicleCam = CreateCamWithParams("DEFAULT_SCRIPTED_CAMERA", 434.03289, -1022.814, 28.730619, 50, 0.00, 282.17034, 80.00, false, 0)
+            SetCamActive(VehicleCam, true)
+            RenderScriptCams(true, true, 500, true, true)
+            
+            if Config.MS == 'high' then
+                Citizen.CreateThread(function()
+                    while true do
+                        if InPreview then
+                            ShowHelpNotification("Press ~INPUT_FRONTEND_RRIGHT~ To Close")
+                        elseif not InPreview then
+                            break
+                        end
+                        Citizen.Wait(1)
+                    end
+                end)
+            elseif Config.MS == 'low' then
+                ShowHelpNotification("Press ~INPUT_FRONTEND_RRIGHT~ To Close")
+            end
+    
             Citizen.CreateThread(function()
                 while true do
-                    if InPreview then
-                        ShowHelpNotification("Press ~INPUT_FRONTEND_RRIGHT~ To Close")
-                    elseif not InPreview then
+                    if IsControlJustReleased(0, 177) then
+                        SetEntityVisible(PlayerPedId(), true, 1)
+                        FreezeEntityPosition(PlayerPedId(), false)
+                        PlaySoundFrontend(-1, "NO", "HUD_FRONTEND_DEFAULT_SOUNDSET", 1)
+                        QBCore.Functions.DeleteVehicle(veh)
+                        DoScreenFadeOut(200)
+                        Citizen.Wait(500)
+                        DoScreenFadeIn(200)
+                        RenderScriptCams(false, false, 1, true, true)
+                        InPreview = false
                         break
                     end
                     Citizen.Wait(1)
                 end
             end)
-        elseif Config.MS == 'low' then
-            ShowHelpNotification("Press ~INPUT_FRONTEND_RRIGHT~ To Close")
-        end
-
-        Citizen.CreateThread(function()
-            while true do
-                if IsControlJustReleased(0, 177) then
-                    SetEntityVisible(PlayerPedId(), true, 1)
-                    FreezeEntityPosition(PlayerPedId(), false)
-                    PlaySoundFrontend(-1, "NO", "HUD_FRONTEND_DEFAULT_SOUNDSET", 1)
-                    QBCore.Functions.DeleteVehicle(veh)
-                    DoScreenFadeOut(200)
-                    Citizen.Wait(500)
-                    DoScreenFadeIn(200)
-                    RenderScriptCams(false, false, 1, true, true)
-                    InPreview = false
-                    break
-                end
-                Citizen.Wait(1)
-            end
-        end)
-    end, coords, true)
+        end, coords, true)
+    end
 end)
 
 function CloseMenu()

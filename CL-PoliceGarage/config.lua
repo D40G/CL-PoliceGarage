@@ -2,7 +2,9 @@ Config = Config or {}
 
 -- Dont forgot to setup the discord logs via the server.lua
 
-Config.UseColors = false
+Config.UseColors = false -- Want to use colors when player buys vehicle?
+
+Config.UsePreviewMenuSync = true -- Sync for the prewview menu when player is inside the prewview menu other players cant get inside (can prevent bugs but not have to use)
 
 Config.UseMarkerInsteadOfMenu = false -- Want to use the marker to return the vehice? if false you can do that by opening the menu
 
@@ -10,7 +12,7 @@ Config.SetVehicleTransparency = 'low' -- Want to make the vehicle more transpare
 
 Config.MS = 'high' -- MS for the script recommended using high if not the "close" will get a bit baggy. options high / low
 
-Config.Job = 'police'
+Config.Job = 'police' --The job needed to open the menu
 
 --You Can Add As Many As You Like
 --DO NOT add vehicles that are not in your shared ! otherwise the qb-garages wont work
